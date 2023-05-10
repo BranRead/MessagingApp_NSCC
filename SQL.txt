@@ -1,0 +1,17 @@
+CREATE DATABASE messaging;
+
+CREATE TABLE Person (
+	ID int NOT NULL AUTO_INCREMENT,
+    fName varchar(255),
+    lName varchar(255),
+    Email varchar(255),
+    PRIMARY KEY (ID)
+);
+
+CREATE TABLE account (
+	ID int,
+    username varchar(255),
+    password varchar(255),
+    verified boolean,
+    FOREIGN KEY (ID) REFERENCES Person(ID)
+); 

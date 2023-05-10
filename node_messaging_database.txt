@@ -1,0 +1,40 @@
+Account
+-
+ID int PK
+Username string 
+Password string
+ProfilePicPath string
+Verified boolean
+
+Person
+-
+ID int FK >- Account.ID
+FName string
+LName string 
+Email string
+Birthday date
+
+Messages
+-
+SentToID int FK >- Account.ID
+SentFromID int FK >- Account.ID
+Message string
+Received boolean
+Read boolean
+
+FriendRequests
+-
+SentToID int FK >- Account.ID
+SentFromID int FK >- Account.ID
+DateSent date
+
+Friends
+-
+Person1ID int FK >- Account.ID
+Person2ID int FK >- Account.ID
+DateFormed
+
+BlockedList
+-
+Person1ID int FK >- Account.ID
+Person2ID int FK >- Account.ID

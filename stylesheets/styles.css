@@ -1,0 +1,114 @@
+.navbar-home, .navbar-signup, .navbar-messaging {
+    background-color: #616682 !important;
+    border-bottom: 5px solid #020300;
+}
+body {
+    background-color: #020300;
+    background-image: url("../images/background.jpg");
+}
+
+.content {
+    margin-top: 22vh;
+}
+
+.login {
+    color: white;
+    background-color: #616682;
+    opacity: 80%;
+    border: 5px solid #020300;
+    border-radius: 10px;
+}
+
+.form-floating {
+    color: #020300;
+}
+
+
+
+.invalid-feedback, .valid-feedback {
+    color: #020300;
+
+}
+
+a.forgotPass:link, a.forgotPass:visited {
+    color: #020300;
+}
+
+a.forgotPass:hover, a.forgotPass:active {
+    color: #353533;
+}
+
+
+.messaging-content {
+    margin-top: 4vh;
+}
+
+.footer-messaging {
+    margin-top: 5vh;
+    border-top: 5px solid #020300;
+    background-color: #616682 !important;
+}
+
+.friendui, .messaging {
+    background-color: #616682;
+    height: 78vh;
+    border: 5px solid #020300;
+    opacity: 80%;
+}
+
+.friendui {
+    border-radius: 10px 0px 0px 10px;
+}
+
+.friendlist {
+    max-height: 88%;
+}
+
+#messaginglist {
+    padding-left: 0px;
+    margin-right: 0.5vw;
+}
+
+.friend {
+    border: 1px solid #020300;
+    height: 50px;
+    background-color: #C1BDB3;
+    border-radius: 5px;
+}
+
+.profilepic {
+    width: 50px;
+    height: 50px;
+    background-color: #00A8E8;
+    border: 1px solid #020300;
+    border-radius: 30px;
+}
+
+.profilepic > img {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+.friend > span {
+    margin-right: 1vw;
+}
+
+.messaging {
+    border-radius: 0px 10px 10px 0px;
+}
+
+.messager {
+    width: 50px;
+    height: 50px;
+    background-color: #00A8E8;
+    border: 1px solid #020300;
+    border-radius: 30px;
+}
+
+.messages {
+    background-color: #C1BDB3;
+    width: 100%;
+    height: 60%;
+    margin-top: 2vh;
+    border: 5px solid #020300;
+}
