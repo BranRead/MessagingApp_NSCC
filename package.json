@@ -1,17 +1,16 @@
 {
-  "name": "node.js_project_nscc",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "public",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "mysql": "^2.18.1"
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
   }
 }

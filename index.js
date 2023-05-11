@@ -65,7 +65,6 @@ app.post('/login', function(req, res) {
 })
 
 app.post('/mes', function(req, res){
-  console.log(req.body.message.toString());
   con.query("INSERT INTO messages(SentToID, SentFromID, Message) VALUES(?, ?, ?)",
     [
       2,
@@ -81,14 +80,18 @@ app.post('/mes', function(req, res){
 
   })
   
-
-// con.connect(function(err) {
-//     if (err) throw err;
-//     console.log("Connected!");
-//     con.query("SELECT * FROM person", function (err, result) {
-//       if (err) throw err;
-//       console.log(result);
-//     });
-// });
+app.post('/disp', function(){
+  con.query("SELECT message FROM messages", function (err, result) {
+    if (err) throw err;
+    // console.log(result[0].message);
+    for(let i = 0; i < result.length; i++){
+    const li = document.createElement("li");
+    const node = document.createTextNode(result[i].message);
+    li.appendChild(node);
+    const ul = document.getElementById("messageLog");
+    ul.appendChild(li);
+    }
+  });
+})
 
 app.listen(8000);

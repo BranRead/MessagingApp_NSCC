@@ -15,3 +15,13 @@ CREATE TABLE account (
     verified boolean,
     FOREIGN KEY (ID) REFERENCES Person(ID)
 ); 
+
+CREATE TABLE messages (
+    SentToID int,
+    SentFromID int,
+    Message varchar(255),
+    Message_Rec boolean,
+    Message_Read boolean,
+    FOREIGN KEY (SentToID) REFERENCES Person(ID),
+    FOREIGN KEY (SentFromID) REFERENCES Person(ID)
+); 
