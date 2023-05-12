@@ -3,7 +3,7 @@ const app = express();
 
 const bodyParser = require('body-parser');
 const newRouter = require('./routes/new');
-const loginRouter = require('./routes/login');
+const homeRouter = require('./routes/home');
 
 app.set('view engine', 'ejs');
 
@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use("/new", newRouter);
-app.use("/login", loginRouter);
+app.use("/home", homeRouter);
 
 
 app.listen(8000);

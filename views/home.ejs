@@ -26,76 +26,28 @@
         <h3 class="text-center">Contacts</h3>
         <div class="overflow-auto friendlist">
         
-        <ul id="messaginglist">
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="images/pp.jpg" alt=""></div>
-            Brandon Read
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <form action="/messages" method="get"></form>
-              <button type="submit"><div class="profilepic overflow-hidden"><img src="" alt=""></div>
-                Sudowoodo
+        <div id="messaginglist" class="d-flex flex-column justify-content-between align-items-center mb-2">
+
+          <div>
+            <form action="/home" method="get">
+              <button class="friend d-flex flex-row justify-content-between align-items-center" type="submit">
+                <div class="profilepic overflow-hidden"><img src="" alt=""></div>
+                <p name="user">bread</p>
                 <span class="badge bg-primary rounded-pill">5</span>
               </button>
-            
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-          <li class="friend d-flex justify-content-between align-items-center mb-2">
-            <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-            Insert Name
-            <span class="badge bg-primary rounded-pill">5</span>
-          </li>
-        </ul>
+            </form>
+          </div>
+
+          <div>
+            <form action="/home" method="get">
+              <button class="friend d-flex flex-row justify-content-between align-items-center" type="submit">
+                <div class="profilepic overflow-hidden"><img src="" alt=""></div>
+                <p name="user">Sudowoodo</p>
+                <span class="badge bg-primary rounded-pill">5</span>
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
       <button>+</button>
       </div>
@@ -104,12 +56,32 @@
         <h3 class="text-center">Messaging</h3>
         
         
-        <div class="col-3 friendmessaging friend d-flex align-items-center justify-content-between"><div class="messager overflow-hidden"><img src="" alt=""></div><span>Insert Name</span></div>
+        <div class="col-3 friendmessaging friend d-flex align-items-center justify-content-between"><div class="messager overflow-hidden">
+          <img src="" alt=""></div><span><%= username %></span>
+        </div>
         <div class="col-12 messages overflow-auto">
-          <ul id="messageLog"></ul>
+          <ul id="messageLog">
+            <% if(action == 'login') {%>
+
+              <% } else { %>
+          <% if(messages.length > 0) {
+                messages.forEach((data) => {
+                  %>
+                    <li class="<%= data.SentFromID %> d-flex justify-content-end"><div class="toFriend"><%= data.Message %></div></li>
+                  <%
+                }) 
+              } else {
+                %>
+                <li>Send a message to get the conversation started!</li>
+                <%  
+              }
+              %>
+          </ul>
+          <% } %>
         </div>
         <div class="col-12 typing-box">
-          <form action="/mes" method="post">
+          <!--Need to add method here!-->
+          <form>
             <div class="mb-3">
               <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
             </div>
