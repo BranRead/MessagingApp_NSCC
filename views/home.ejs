@@ -32,7 +32,7 @@
             <form action="/home" method="get">
               <button class="friend d-flex flex-row justify-content-between align-items-center" type="submit">
                 <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-                <p name="user">bread</p>
+                <p name="user" value="bread">bread</p>
                 <span class="badge bg-primary rounded-pill">5</span>
               </button>
             </form>
@@ -56,8 +56,13 @@
         <h3 class="text-center">Messaging</h3>
         
         
-        <div class="col-3 friendmessaging friend d-flex align-items-center justify-content-between"><div class="messager overflow-hidden">
-          <img src="" alt=""></div><span><%= username %></span>
+        <div class="col-3 friendmessaging friend d-flex align-items-center justify-content-between">
+          <div class="messager overflow-hidden"><img src="" alt=""></div>
+          <span>
+            <% if (action == 'receive') {%> 
+              <p><%= sendTo %></p>
+              <% } %>        
+          </span>
         </div>
         <div class="col-12 messages overflow-auto">
           <ul id="messageLog">
@@ -81,11 +86,11 @@
         </div>
         <div class="col-12 typing-box">
           <!--Need to add method here!-->
-          <form>
+          <form action="/home/messages" method="post">
             <div class="mb-3">
               <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
             </div>
-            <div class="d-flex flex-row-reverse"><button  type="submit">Send</button></div>
+            <div class="d-flex flex-row-reverse"><button type="submit">Send</button></div>
           </form>
         </div>
       </div>

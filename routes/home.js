@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const con = require('../database');
 let user = '';
+let sendTo = '';
 
 router.use(logger);
 
@@ -9,6 +10,8 @@ router
 .route("/")
 // Gets messages
 .get((req, res, next) => {
+  sendTo = req.body.user;
+  console.log(sendTo);
   con.query("SELECT * FROM messages", (err, data) => {
     if (err) {
       throw err;
@@ -17,6 +20,7 @@ router
       {
         action: 'receive',
         username: user,
+        sendTo: sendTo,
         messages: data
       });
     }
@@ -43,19 +47,22 @@ router
           }
         })
 })
-// .post((req, res) => {
-//   con.query("INSERT INTO messages(SentToID, SentFromID, Message) VALUES(?, ?, ?)",
-//     [
-//       2,
-//       1,
-//       req.body.message.toString()
-//     ],
-//     (err, result) => {
-//     if (err) throw err;
-//     console.log("Data added to Message table.");
-//     // res.render('home');    
-//   })
-// })
+
+router.
+route("/messages")
+.post((req, res) => {
+  con.query("INSERT INTO messages(SentToID, SentFromID, Message) VALUES(?, ?, ?)",
+    [
+      2,
+      1,
+      req.body.message.toString()
+    ],
+    (err, result) => {
+    if (err) throw err;
+    console.log("Data added to Message table.");
+    // res.render('home');    
+  })
+})
 
 function logger(req, res, next){
     next();
