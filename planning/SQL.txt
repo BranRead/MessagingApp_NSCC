@@ -25,3 +25,10 @@ CREATE TABLE messages (
     FOREIGN KEY (SentToID) REFERENCES Person(ID),
     FOREIGN KEY (SentFromID) REFERENCES Person(ID)
 ); 
+
+CREATE TABLE friends (
+	PersonA_ID int,
+    PersonB_ID int,
+    FOREIGN KEY (PersonA_ID) REFERENCES Person(ID),
+    FOREIGN KEY (PersonB_ID) REFERENCES Person(ID)
+); 
