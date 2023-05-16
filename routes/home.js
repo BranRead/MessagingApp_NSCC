@@ -10,6 +10,7 @@ const loginInfo = {
   id: 0,
   friendlist: []
 }
+let list = [];
 
 
 router.use(logger);
@@ -28,8 +29,10 @@ router
       {
         action: 'receive',
         username: user,
+        id: ID,
         sendTo: sendTo,
-        messages: data
+        messages: data,
+        friendlist: list
       });
     }
   })
@@ -53,7 +56,7 @@ router
                 let flag = false;
                 result.forEach((value) => {
                   if(value.PersonA_ID != ID){
-                    console.log('Value added')
+                    
                     if(!flag){
                       query += "A.ID = " + value.PersonA_ID;
                       flag = true;
@@ -61,7 +64,7 @@ router
                       query += " OR A.ID = " + value.PersonA_ID;
                     }
                   } else {
-                    console.log('Value added')
+                    
                     if(!flag){
                       query += "A.ID = " + value.PersonB_ID;
                       flag = true;
@@ -73,9 +76,10 @@ router
                 
                 con.query(query, (err, result) => {
                   if (err) throw err;
+                  list = result;
                   loginInfo.username = user;
                   loginInfo.id = ID;
-                  loginInfo.friendlist = result;
+                  loginInfo.friendlist = list;
                 
                   res.render('home', loginInfo)
                 }) 

@@ -29,9 +29,10 @@
         <div id="messaginglist" class="d-flex flex-column justify-content-between align-items-center mb-2">
           <div>
 
-              <%
-                if(friendlist.length > 0){
+          <% if(action == 'login' || action == 'receive'){ %>
+                <% if(friendlist.length > 0){
                   friendlist.forEach(function(friend){
+                    console.log({ friendlist});
                       %>
                       <form action="/home" method="get">
                         <button class="friend d-flex flex-row justify-content-between align-items-center" type="submit">
@@ -42,14 +43,14 @@
                       </form>
                       <%
                   })
-                            } else {
+                } else {
                   %>
                   <div>
                       <p>Add some friends!</p>
                   </div>
                   <%
-                            }
-                            %>
+                }
+              } %>
               
 
           </div>
