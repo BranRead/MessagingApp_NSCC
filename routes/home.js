@@ -3,7 +3,13 @@ const router = express.Router();
 const con = require('../database');
 let user = '';
 let sendTo = '';
- 
+let ID = 0; 
+const loginInfo = {
+  action: 'login',
+  username: '',
+  id: 0,
+  friendlist: []
+}
 
 
 router.use(logger);
@@ -31,8 +37,7 @@ router
 // Actually logs user in
 .post((req, res) => {
   user = req.body.username;
-  const friendsArray = [];
-  let ID = 0; 
+  
   
   con.query("SELECT * FROM account WHERE username = ?",
   user,
@@ -41,50 +46,39 @@ router
       const userPass = req.body.password;
         if (userPass === result[0].password){
           ID = result[0].ID;
-            con.query("SELECT F.PersonA_ID, F.PersonB_ID FROM account INNER JOIN friends AS F ON account.ID = F.PersonA_ID OR account.ID = F.PersonB_ID where account.ID = ?",
-              ID, (err, result) => {
+            con.query("SELECT PersonA_ID, PersonB_ID FROM friends where ? = PersonA_ID OR ? = PersonB_ID;",
+              [ID, ID], (err, result) => {
                 if (err) throw err;
-                console.log("Logged in!");
-                if(result.length > 0){
-                  result.forEach((connection, index, array, ID, friendsArray) => {
-
-                    if (ID !== connection.PersonA_ID){
-                      con.query("SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE A.ID = ?",
-                      [connection.PersonA_ID],
-                      (err, details) => {
-                        if (err) throw err;
-                        let account = {
-                          "ID": details[0].ID, 
-                          "Username": details[0].username,
-                          "firstName": details[0].fName,
-                          "lastName": details[0].lName
-                        }
-                        friendsArray.push(account);
-                      })
+                let query = "SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE ";
+                let flag = false;
+                result.forEach((value) => {
+                  if(value.PersonA_ID != ID){
+                    console.log('Value added')
+                    if(!flag){
+                      query += "A.ID = " + value.PersonA_ID;
+                      flag = true;
                     } else {
-                      con.query("SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE A.ID = ?",
-                      [connection.PersonB_ID],
-                      (err, details) => {
-                        if (err) throw err;
-                        let account = {
-                          "ID": details[0].ID, 
-                          "Username": details[0].username,
-                          "firstName": details[0].fName,
-                          "lastName": details[0].lName
-                        }
-                        friendsArray.push(account);
-                      })
+                      query += " OR A.ID = " + value.PersonA_ID;
                     }
-                  });
-                }
+                  } else {
+                    console.log('Value added')
+                    if(!flag){
+                      query += "A.ID = " + value.PersonB_ID;
+                      flag = true;
+                    } else {
+                      query += " OR A.ID = " + value.PersonB_ID;
+                    }
+                  }
+                })
                 
-                res.render('home',
-                  {
-                    action: 'login',
-                    username: user,
-                    id: ID,
-                    friendlist: friendsArray
-                  })
+                con.query(query, (err, result) => {
+                  if (err) throw err;
+                  loginInfo.username = user;
+                  loginInfo.id = ID;
+                  loginInfo.friendlist = result;
+                
+                  res.render('home', loginInfo)
+                }) 
               })
           } else {
             console.log("Problem logging in");
@@ -112,5 +106,40 @@ route("/messages")
 function logger(req, res, next){
     next();
 }
+
+// function getDetails(connection){
+
+//   if (ID !== connection.PersonA_ID){
+//     con.query("SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE A.ID = ?;",
+//     [connection.PersonA_ID],
+//     (err, details) => {
+//       if (err) throw err;
+//       let account = {
+//         ID: details[0].ID, 
+//         Username: details[0].username,
+//         firstName: details[0].fName,
+//         lastName: details[0].lName
+//       }
+//       friendsArray.push(account);
+//     })
+//   } else {
+//     con.query("SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE A.ID = ?;",
+//     [connection.PersonB_ID],
+//     (err, details) => {
+//       if (err) throw err;
+//       let account = {
+//         ID: details[0].ID, 
+//         username: details[0].username,
+//         firstName: details[0].fName,
+//         lastName: details[0].lName
+//       }
+//       friendsArray.push(account);
+//       console.log("query");
+//       console.log({friendsArray});
+//     })
+//   }
+// }
+  
+
 
 module.exports = router; 

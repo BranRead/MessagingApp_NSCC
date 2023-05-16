@@ -30,26 +30,27 @@
           <div>
 
               <%
-              if(friendlist.length > 0){
-                friendlist.forEach(function(friend){
-                    %>
-                    <form action="/home" method="get">
-                      <button class="friend d-flex flex-row justify-content-between align-items-center" type="submit">
-                        <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-                        <p name="user"><%= friend.Username %></p>
-                        <span class="badge bg-primary rounded-pill">5</span>
-                      </button>
-                    </form>
-                    <%
-                })
-            } else {
-                %>
-                <div>
-                    <p>Add some friends!</p>
-                </div>
-                <%
-            }
-            %> 
+                if(friendlist.length > 0){
+                  friendlist.forEach(function(friend){
+                      %>
+                      <form action="/home" method="get">
+                        <button class="friend d-flex flex-row justify-content-between align-items-center" type="submit">
+                          <div class="profilepic overflow-hidden"><img src="" alt=""></div>
+                          <p name="user"><%= friend.username %></p>
+                          <span class="badge bg-primary rounded-pill">5</span>
+                        </button>
+                      </form>
+                      <%
+                  })
+                            } else {
+                  %>
+                  <div>
+                      <p>Add some friends!</p>
+                  </div>
+                  <%
+                            }
+                            %>
+              
 
           </div>
         </div>
@@ -59,8 +60,6 @@
 
       <div class="col-8 offset-1 messaging">
         <h3 class="text-center">Messaging</h3>
-        
-        
         <div class="col-3 friendmessaging friend d-flex align-items-center justify-content-between">
           <div class="messager overflow-hidden"><img src="" alt=""></div>
           <span>
@@ -72,8 +71,7 @@
         <div class="col-12 messages overflow-auto">
           <ul id="messageLog">
             <% if(action == 'login') {
-              console.log(friendlist)%>
-
+              console.log("Logged in")%>
               <% } else { %>
           <% if(messages.length > 0) {
                 messages.forEach((data) => {
