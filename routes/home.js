@@ -17,31 +17,9 @@ router.use(logger);
 
 router
 .route("/")
-// Gets messages
-.get((req, res, next) => {
-  sendTo = req.body.user;
-  console.log(sendTo);
-  con.query("SELECT * FROM messages", (err, data) => {
-    if (err) {
-      throw err;
-    } else {
-    res.render('home', 
-      {
-        action: 'receive',
-        username: user,
-        id: ID,
-        sendTo: sendTo,
-        messages: data,
-        friendlist: list
-      });
-    }
-  })
-})
 // Actually logs user in
 .post((req, res) => {
   user = req.body.username;
-  
-  
   con.query("SELECT * FROM account WHERE username = ?",
   user,
     (err, result) => {
@@ -93,19 +71,47 @@ router
 
 router.
 route("/messages")
-.post((req, res) => {
-  con.query("INSERT INTO messages(SentToID, SentFromID, Message) VALUES(?, ?, ?)",
-    [
-      2,
-      1,
-      req.body.message.toString()
-    ],
-    (err, result) => {
-    if (err) throw err;
-    console.log("Data added to Message table.");
-    // res.render('home');    
+// Gets messages
+.post((req, res, next) => {
+  let userFriend = req.body.userF;
+  con.query("SELECT ID FROM account WHERE username =?", userFriend, (err, data) => {
+    if (err) {
+      throw err;
+    } else {
+      con.query("SELECT * FROM messages WHERE (SentToID = " + data[0].ID + " AND SentFromID = " + ID + ") OR (SentToID = " + ID + " AND SentFromID = " + data[0].ID + ");",
+      (err, messages) => {
+        if(err){
+          throw err;
+        } else {
+          res.render('home', 
+            {
+              action: 'receive',
+              username: user,
+              userFriend: userFriend,
+              id: ID,
+              friendID: data[0].ID,
+              messages: messages,
+              friendlist: list
+            });
+            
+        }
+      }
+  )}
   })
 })
+// .post((req, res) => {
+//   con.query("INSERT INTO messages(SentToID, SentFromID, Message) VALUES(?, ?, ?)",
+//     [
+//       2,
+//       1,
+//       req.body.message.toString()
+//     ],
+//     (err, result) => {
+//     if (err) throw err;
+//     console.log("Data added to Message table.");
+//     // res.render('home');    
+//   })
+// })
 
 function logger(req, res, next){
     next();
