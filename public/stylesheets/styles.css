@@ -43,8 +43,14 @@ a.forgotPass:hover, a.forgotPass:active {
     margin-top: 4vh;
 }
 
+.footer-home {
+    margin-top: 41.9vh;
+    background-color: #616682 !important;
+    border-top: 5px solid #020300;
+}
+
 .footer-messaging {
-    margin-top: 5vh;
+    margin-top: 3.75vh;
     border-top: 5px solid #020300;
     background-color: #616682 !important;
 }
@@ -57,11 +63,24 @@ a.forgotPass:hover, a.forgotPass:active {
 }
 
 .friendui {
+    border-radius: 10px 10px 10px 10px;
+}
+
+.roundedCorners {
     border-radius: 10px 0px 0px 10px;
 }
 
 .friendlist {
     max-height: 88%;
+}
+
+.popup-add {
+    background-color: #C1BDB3;
+    visibility: hidden;
+}
+
+.labelSearch {
+    margin-left: 2vw;
 }
 
 #messaginglist {

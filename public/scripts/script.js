@@ -1,17 +1,12 @@
-const login = document.querySelector(".formSubmit");
-const form = document.querySelector("form");
-// const data = new FormData(form);
-// var inputs = form[0].getElementsByTagName("input");
-// const signUp = document.querySelector(".sign-up-but");
+const addFriendBtn = document.getElementById("addFriend");
+const popup = document.querySelector(".popup-add");
 
-login.addEventListener("click", e => {
-    if (!form.checkValidity()) {
-        e.preventDefault()
-    }
-
-    
-    form.classList.add('was-validated');
-
+addFriendBtn.addEventListener("click", () => {
+  if(popup.style.visibility == 'visible'){
+    popup.style.visibility = 'hidden'
+  } else {
+    popup.style.visibility = 'visible'
+  }
 })
 
 function getDetails(connection){

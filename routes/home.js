@@ -4,6 +4,7 @@ const con = require('../database');
 let user = '';
 let sendTo = '';
 let ID = 0; 
+let friendID = 0;
 const loginInfo = {
   action: 'login',
   username: '',
@@ -78,7 +79,8 @@ route("/messages")
     if (err) {
       throw err;
     } else {
-      con.query("SELECT * FROM messages WHERE (SentToID = " + data[0].ID + " AND SentFromID = " + ID + ") OR (SentToID = " + ID + " AND SentFromID = " + data[0].ID + ");",
+      friendID = data[0].ID
+      con.query("SELECT * FROM messages WHERE (SentToID = " + friendID + " AND SentFromID = " + ID + ") OR (SentToID = " + ID + " AND SentFromID = " + friendID + ");",
       (err, messages) => {
         if(err){
           throw err;
@@ -89,7 +91,7 @@ route("/messages")
               username: user,
               userFriend: userFriend,
               id: ID,
-              friendID: data[0].ID,
+              friendID: friendID,
               messages: messages,
               friendlist: list
             });
@@ -99,57 +101,25 @@ route("/messages")
   )}
   })
 })
-// .post((req, res) => {
-//   con.query("INSERT INTO messages(SentToID, SentFromID, Message) VALUES(?, ?, ?)",
-//     [
-//       2,
-//       1,
-//       req.body.message.toString()
-//     ],
-//     (err, result) => {
-//     if (err) throw err;
-//     console.log("Data added to Message table.");
-//     // res.render('home');    
-//   })
-// })
+
+router.
+route("/send")
+.post((req, res) => {
+  con.query("INSERT INTO messages(SentToID, SentFromID, Message) VALUES(?, ?, ?)",
+    [
+      friendID,
+      ID,
+      req.body.message.toString()
+    ],
+    (err, result) => {
+    if (err) throw err;
+    console.log("Data added to Message table.");
+    // res.render('home');    
+  })
+})
 
 function logger(req, res, next){
     next();
 }
-
-// function getDetails(connection){
-
-//   if (ID !== connection.PersonA_ID){
-//     con.query("SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE A.ID = ?;",
-//     [connection.PersonA_ID],
-//     (err, details) => {
-//       if (err) throw err;
-//       let account = {
-//         ID: details[0].ID, 
-//         Username: details[0].username,
-//         firstName: details[0].fName,
-//         lastName: details[0].lName
-//       }
-//       friendsArray.push(account);
-//     })
-//   } else {
-//     con.query("SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE A.ID = ?;",
-//     [connection.PersonB_ID],
-//     (err, details) => {
-//       if (err) throw err;
-//       let account = {
-//         ID: details[0].ID, 
-//         username: details[0].username,
-//         firstName: details[0].fName,
-//         lastName: details[0].lName
-//       }
-//       friendsArray.push(account);
-//       console.log("query");
-//       console.log({friendsArray});
-//     })
-//   }
-// }
-  
-
 
 module.exports = router; 
