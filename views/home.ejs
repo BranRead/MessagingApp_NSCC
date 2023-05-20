@@ -25,8 +25,6 @@
           <ul class="dropdown-menu dropdown-menu-dark">
             <li><a class="dropdown-item" href="#">Account</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Friend Requests</a></li>
-            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="../">Logout</a></li>
           </ul>
         </div>
@@ -77,21 +75,61 @@
       <div>
         <button id="addFriend" type="button">+</button>
        
-          <div class="popup-add d-flex flex-column justify-content-between align-items-center text-center dropdown-item">
+          <div class="popup-add d-flex flex-column justify-content-between align-items-center text-center dropdown-item" style="opacity: 0;">
             <h6>Add Friends by entering their username</h6>
-            <div class="form-floating d-flex flex-column justify-content-between align-items-center">
-                <input type="username" id="username" class="form-control entry friend-search"
-                placeholder="Type username here" name="username" required>
-                <label class="labelSearch" for="username">Username</label>
-                <button class="searchUser" type="submit">Send Request</button>
-            </div>
+            <form action="/home/search" method="post">
+              <div class="form-floating d-flex flex-column justify-content-between align-items-center">
+                  <input type="username" id="username" class="form-control entry friend-search"
+                  placeholder="Type username here" name="username" required>
+                  <label class="labelSearch" for="username">Username</label>
+                  <button class="searchUser" type="submit">Send Request</button>
+              </div>
+            </form>
           </div>
         
       </div>
+      <button id="addFriend" type="button">Bell</button>
+      </div>
+
+      <div class="col-3 friend-requests">
+        <h3 class="text-center">Friend Requests</h3>
+        <div>
+          <div id="friendReqList" class="d-flex flex-column justify-content-between align-items-center">
+            <% if(action == 'login') {
+              if (requests.length > 0) { %> 
+              <% requests.forEach((person) => { %>
+
+                <div class="requests d-flex flex-row justify-content-between align-items-center">
+                  
+                  <div class="profilepic overflow-hidden ms-2"><img src="" alt=""></div>
+                  <p><%= person.username %></p>
+                  <div class="d-flex flex-column btn-options">
+                    <form action="/home/accept" method="post">
+                      <button class="rounded-pill mb-1" type="submit" name="reqID" value="<%= person.FriReqID %>">
+                        Accept
+                      </button>
+                    </form>
+                    <form action="/home/decline" method="post">
+                      <button class="rounded-pill" type="submit" name="reqID" value="<%= person.FriReqID %>">
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                  
+                </div>
+            <% })
+              } else { %>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                  <p class="">No Friend Requests</p>
+                </div>
+              <% }
+            } %> 
+          </div>
+        </div>
       </div>
 
       <% if (action == 'receive') {%> 
-      <div class="col-8 offset-1 messaging">
+      <div class="col-5 messaging">
         <h3 class="text-center">Messaging</h3>
         
         <div class="col-3 friendmessaging friend d-flex align-items-center justify-content-between">
@@ -106,7 +144,7 @@
           <ul id="messageLog">
             <% if(action == 'login') {
               console.log("Logged in")
-                } else {
+                } else if (action != 'request'){
             if(messages.length > 0) {
                 messages.forEach((data) => {
                   if(data.SentToID == id){ %>

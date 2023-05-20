@@ -2,10 +2,12 @@ const addFriendBtn = document.getElementById("addFriend");
 const popup = document.querySelector(".popup-add");
 
 addFriendBtn.addEventListener("click", () => {
-  if(popup.style.visibility == 'visible'){
-    popup.style.visibility = 'hidden'
-  } else {
+  if(popup.style.opacity == 0){
     popup.style.visibility = 'visible'
+    popup.style.opacity = 1
+  } else {
+    popup.style.visibility = 'hidden'
+    popup.style.opacity = 0
   }
 })
 

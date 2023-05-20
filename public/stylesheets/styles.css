@@ -44,7 +44,7 @@ a.forgotPass:hover, a.forgotPass:active {
 }
 
 .footer-home {
-    margin-top: 41.9vh;
+    margin-top: 41.7vh;
     background-color: #616682 !important;
     border-top: 5px solid #020300;
 }
@@ -55,7 +55,7 @@ a.forgotPass:hover, a.forgotPass:active {
     background-color: #616682 !important;
 }
 
-.friendui, .messaging {
+.friendui, .friend-requests, .messaging {
     background-color: #616682;
     height: 78vh;
     border: 5px solid #020300;
@@ -76,7 +76,8 @@ a.forgotPass:hover, a.forgotPass:active {
 
 .popup-add {
     background-color: #C1BDB3;
-    visibility: hidden;
+    
+    transition:opacity 1000ms;
 }
 
 .labelSearch {
@@ -88,12 +89,20 @@ a.forgotPass:hover, a.forgotPass:active {
     margin-right: 0.5vw;
 }
 
-.friend {
+.friend, .requests {
     border: 1px solid #020300;
     width: 15vw;
     height: 60px;
     background-color: #C1BDB3;
     border-radius: 5px;
+}
+
+.requests {
+    height: 70px;
+}
+
+.btn-options {
+    width: 70px;
 }
 
 .friend > p {

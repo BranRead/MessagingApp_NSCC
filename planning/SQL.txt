@@ -26,9 +26,13 @@ CREATE TABLE messages (
     FOREIGN KEY (SentFromID) REFERENCES Person(ID)
 ); 
 
-CREATE TABLE friends (
+CREATE TABLE Friends (
+    FriReqID int AUTO_INCREMENT,
 	PersonA_ID int,
     PersonB_ID int,
+    Verified bit DEFAULT 0,
+    PRIMARY KEY (FriReqID),
     FOREIGN KEY (PersonA_ID) REFERENCES Person(ID),
     FOREIGN KEY (PersonB_ID) REFERENCES Person(ID)
 ); 
+

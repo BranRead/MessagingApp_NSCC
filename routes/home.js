@@ -9,9 +9,11 @@ const loginInfo = {
   action: 'login',
   username: '',
   id: 0,
-  friendlist: []
+  friendlist: [],
+  requests: [],
 }
 let list = [];
+let requests = [];
 
 
 router.use(logger);
@@ -28,44 +30,10 @@ router
       const userPass = req.body.password;
         if (userPass === result[0].password){
           ID = result[0].ID;
-            con.query("SELECT PersonA_ID, PersonB_ID FROM friends where ? = PersonA_ID OR ? = PersonB_ID;",
-              [ID, ID], (err, result) => {
-                if (err) throw err;
-                let query = "SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE ";
-                let flag = false;
-                result.forEach((value) => {
-                  if(value.PersonA_ID != ID){
-                    
-                    if(!flag){
-                      query += "A.ID = " + value.PersonA_ID;
-                      flag = true;
-                    } else {
-                      query += " OR A.ID = " + value.PersonA_ID;
-                    }
-                  } else {
-                    
-                    if(!flag){
-                      query += "A.ID = " + value.PersonB_ID;
-                      flag = true;
-                    } else {
-                      query += " OR A.ID = " + value.PersonB_ID;
-                    }
-                  }
-                })
-                
-                con.query(query, (err, result) => {
-                  if (err) throw err;
-                  list = result;
-                  loginInfo.username = user;
-                  loginInfo.id = ID;
-                  loginInfo.friendlist = list;
-                
-                  res.render('home', loginInfo)
-                }) 
-              })
+            login(res);
           } else {
             console.log("Problem logging in");
-            res.redirect('home.html');
+            res.redirect('index.html');
           }
   })
 })
@@ -103,6 +71,26 @@ route("/messages")
 })
 
 router.
+route("/search")
+.post((req, res) => {
+  const added = req.body.username;
+  console.log(1 + added + 1);
+  con.query("SELECT ID FROM account where username='" + added + "';",
+  (err, success) => {
+    if (err) {
+      console.log("User not found");
+    } else {
+      const addedID = success[0].ID;
+      con.query("INSERT INTO friends(SentToID, SentFromID, Verified) VALUES(" + addedID + ", " + ID + ", 0);",
+      (err, success) => {
+        if (err) throw err;
+        console.log("Request sent");
+      })
+    }
+  })
+})
+
+router.
 route("/send")
 .post((req, res) => {
   con.query("INSERT INTO messages(SentToID, SentFromID, Message) VALUES(?, ?, ?)",
@@ -118,8 +106,92 @@ route("/send")
   })
 })
 
+router
+.route("/accept")
+.post((req, res) => {
+    let friendRequestID = req.body.reqID;
+    con.query("UPDATE friends SET Verified = 1 WHERE FriReqID = " + friendRequestID, 
+    (err, result) => {
+      login(res);
+  })
+})
+
+router
+.route("/decline")
+.post((req, res) => {
+  let friendRequestID = req.body.reqID;
+  con.query("DELETE FROM friends WHERE FriReqID = " + friendRequestID, 
+  (err, result) => {
+    login(res);
+  })
+})
+
 function logger(req, res, next){
     next();
 }
+
+
+function login(res){
+  con.query("SELECT SentToID, SentFromID FROM friends where ? = SentToID AND Verified = 1 OR ? = SentFromID AND Verified = 1 ;",
+              [ID, ID], (err, result) => {
+                if (err) throw err;
+                if (result.length > 0) {
+                  let query = "SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE ";
+                  let flag = false;
+                  result.forEach((value) => {
+                    if(value.SentToID != ID){
+                      if(!flag){
+                        query += "A.ID = " + value.SentToID;
+                        flag = true;
+                      } else {
+                        query += " OR A.ID = " + value.SentToID;
+                      }
+                    } else {
+
+                      if(!flag){
+                        query += "A.ID = " + value.SentFromID;
+                        flag = true;
+                      } else {
+                        query += " OR A.ID = " + value.SentFromID;
+                      }
+                    }
+                  })
+                
+                con.query(query, (err, result) => {
+                  if (err) throw err;
+                  list = result;
+
+                  con.query("SELECT F.FriReqID, A.username FROM friends as F INNER JOIN account as A ON F.SentFromID=A.ID WHERE F.SentToID=" + ID + " AND F.Verified = 0",
+                  (err, friendRequests) => {
+                    if(err) throw err;
+
+                    friendRequests = friendRequests;
+                    loginInfo.username = user;
+                    loginInfo.id = ID;
+                    loginInfo.friendlist = list;
+                    loginInfo.requests = friendRequests;
+
+                    res.render('home', loginInfo)
+                  });
+                    
+                    
+                }) 
+              } else {
+                list = [];
+                con.query("SELECT F.FriReqID, A.username FROM friends as F INNER JOIN account as A ON F.SentFromID=A.ID WHERE F.SentToID=" + ID + " AND F.Verified = 0",
+                  (err, friendRequests) => {
+                    if(err) throw err;
+
+                    friendRequests = friendRequests;
+                    loginInfo.username = user;
+                    loginInfo.id = ID;
+                    loginInfo.friendlist = list;
+                    loginInfo.requests = friendRequests;
+
+                    res.render('home', loginInfo)
+              })
+            }
+          })
+        }
 
 module.exports = router; 
