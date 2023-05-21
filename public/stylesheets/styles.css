@@ -2,6 +2,7 @@
     background-color: #616682 !important;
     border-bottom: 5px solid #020300;
 }
+
 body {
     background-color: #020300;
     background-image: url("../images/background.jpg");
@@ -22,8 +23,6 @@ body {
 .form-floating {
     color: #020300;
 }
-
-
 
 .invalid-feedback, .valid-feedback {
     color: #020300;
@@ -76,8 +75,6 @@ a.forgotPass:hover, a.forgotPass:active {
 
 .popup-add {
     background-color: #C1BDB3;
-    
-    transition:opacity 1000ms;
 }
 
 .labelSearch {

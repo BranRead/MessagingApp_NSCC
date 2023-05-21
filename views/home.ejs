@@ -10,23 +10,25 @@
 </head>
 <body>
 
-  <nav class="navbar bg-body-tertiary navbar-messaging">
+  <nav class="navbar bg-body-tertiary navbar-messaging d-flex flex-row justify-content-between">
     <div class="container">
       
         <a class="navbar-brand col-3" href="#">
           <img src="/images/crowb.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
           <h3 class="d-inline-block">As the Crow Flies</h3>
         </a>
-        <h3 class="text-center col-3"><%= username %></h3>
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Menu
-          </button>
-          <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" href="#">Account</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="../">Logout</a></li>
-          </ul>
+        <h3 class="text-center col-3 username-title"><%= username %></h3>
+        <div class="col-3">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Menu
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="#">Account</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="../">Logout</a></li>
+            </ul>
+          </div>
         </div>
     </div>
   </nav>
@@ -72,60 +74,69 @@
           </div>
         </div>
       </div>
-      <div>
-        <button id="addFriend" type="button">+</button>
-       
-          <div class="popup-add d-flex flex-column justify-content-between align-items-center text-center dropdown-item" style="opacity: 0;">
-            <h6>Add Friends by entering their username</h6>
-            <form action="/home/search" method="post">
-              <div class="form-floating d-flex flex-column justify-content-between align-items-center">
-                  <input type="username" id="username" class="form-control entry friend-search"
-                  placeholder="Type username here" name="username" required>
-                  <label class="labelSearch" for="username">Username</label>
-                  <button class="searchUser" type="submit">Send Request</button>
-              </div>
-            </form>
+      
+<div class="d-flex flex-row justify-content-center">
+  <button id="addFriend" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#friendSearch" aria-expanded="false" aria-controls="friendSearch">
+    +
+  </button>
+  <button id="notif" class="ms-3 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#friendReq" aria-expanded="false" aria-controls="friendReq">
+    Bell
+  </button>
+</div>
+
+<div class="collapse" id="friendSearch">
+  <div class="card card-body popup-add">
+    <div  class="popup-add d-flex flex-column justify-content-between align-items-center text-center">
+        <h6>Add Friends by entering their username</h6>
+        <form action="/home/search" method="post">
+          <div class="form-floating d-flex flex-column justify-content-between align-items-center">
+              <input type="username" id="username" class="form-control entry friend-search"
+              placeholder="Type username here" name="username" required>
+              <label class="labelSearch" for="username">Username</label>
+              <button class="searchUser" type="submit">Send Request</button>
           </div>
+        </form>
+      </div>
+  </div>
+</div>        
+  </div>
+
+      <div id="friendReq" class="card card-body col-3 friend-requests collapse" style="min-height: 78vh; max-width: 300px;">
         
-      </div>
-      <button id="addFriend" type="button">Bell</button>
-      </div>
-
-      <div class="col-3 friend-requests">
-        <h3 class="text-center">Friend Requests</h3>
-        <div>
-          <div id="friendReqList" class="d-flex flex-column justify-content-between align-items-center">
-            <% if(action == 'login') {
-              if (requests.length > 0) { %> 
-              <% requests.forEach((person) => { %>
-
-                <div class="requests d-flex flex-row justify-content-between align-items-center">
-                  
-                  <div class="profilepic overflow-hidden ms-2"><img src="" alt=""></div>
-                  <p><%= person.username %></p>
-                  <div class="d-flex flex-column btn-options">
-                    <form action="/home/accept" method="post">
-                      <button class="rounded-pill mb-1" type="submit" name="reqID" value="<%= person.FriReqID %>">
-                        Accept
-                      </button>
-                    </form>
-                    <form action="/home/decline" method="post">
-                      <button class="rounded-pill" type="submit" name="reqID" value="<%= person.FriReqID %>">
-                        Delete
-                      </button>
-                    </form>
+          <h3 class="text-center">Friend Requests</h3>
+          <div>
+            <div id="friendReqList" class="d-flex flex-column justify-content-between align-items-center">
+              <% if(action == 'login') {
+                if (requests.length != 0) { %>
+                <% requests.forEach((person) => { %>
+                  <div class="requests d-flex flex-row justify-content-between align-items-center">
+          
+                    <div class="profilepic overflow-hidden ms-2"><img src="" alt=""></div>
+                    <p><%= person.username %></p>
+                    <div class="d-flex flex-column btn-options">
+                      <form action="/home/accept" method="post">
+                        <button class="rounded-pill mb-1" type="submit" name="reqID" value="<%= person.FriReqID %>">
+                          Accept
+                        </button>
+                      </form>
+                      <form action="/home/decline" method="post">
+                        <button class="rounded-pill" type="submit" name="reqID" value="<%= person.FriReqID %>">
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+          
                   </div>
-                  
-                </div>
-            <% })
-              } else { %>
-                <div class="d-flex flex-row justify-content-between align-items-center">
-                  <p class="">No Friend Requests</p>
-                </div>
-              <% }
-            } %> 
+              <% })
+                } else { %>
+                  <div class="d-flex flex-row justify-content-between align-items-center">
+                    <p>No Friend Requests</p>
+                  </div>
+                <% }
+              } %>
+            </div>
           </div>
-        </div>
+       
       </div>
 
       <% if (action == 'receive') {%> 

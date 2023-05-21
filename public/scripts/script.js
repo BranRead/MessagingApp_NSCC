@@ -1,15 +1,22 @@
 const addFriendBtn = document.getElementById("addFriend");
-const popup = document.querySelector(".popup-add");
+const friendSearch = document.querySelector(".popup-add");
+const friendReqBtn = document.getElementById("notif");
+const friendReqScreen = document.getElementById(".friend-requests");
 
-addFriendBtn.addEventListener("click", () => {
-  if(popup.style.opacity == 0){
-    popup.style.visibility = 'visible'
-    popup.style.opacity = 1
-  } else {
-    popup.style.visibility = 'hidden'
-    popup.style.opacity = 0
-  }
-})
+// popupWindow(addFriendBtn, friendSearch);
+// popupWindow(friendReqBtn, friendReqScreen);
+
+// function popupWindow (btn, popupWindow){
+//   btn.addEventListener("click", () => {
+//     if(popupWindow.style.opacity == 0){
+//       popupWindow.style.opacity = 1
+//     } else {
+//       popupWindow.style.display = 'none'
+//       popupWindow.style.opacity = 0
+//     }
+//   })
+// }
+
 
 function getDetails(connection){
 
