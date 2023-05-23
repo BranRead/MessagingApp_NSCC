@@ -12,13 +12,42 @@ body {
     margin-top: 22vh;
 }
 
-.login {
+.account-title {
+    background-color: rgba(0, 168, 232, 1);
+    width: 100%;
+    height: 7vh;
+    border-bottom: 5px solid #020300;
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: #020300;
+}
+
+
+.account-content {
+    height: 100%;
+    padding: 0;
+}
+
+.account-username {
+    width: 100%;
+}
+
+.account-heading {
+    margin-bottom: 0;
+}
+
+
+
+.login, .account-content {
     color: white;
-    background-color: #616682;
-    opacity: 80%;
+    background-color: rgba(97, 102, 130, .8);
     border: 5px solid #020300;
     border-radius: 10px;
 }
+
 
 .form-floating {
     color: #020300;

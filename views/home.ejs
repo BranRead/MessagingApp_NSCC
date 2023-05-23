@@ -24,7 +24,9 @@
               Menu
             </button>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="#">Account</a></li>
+              <form action="/home/account" method="post">
+                <li><button class="dropdown-item" type="submit">Account</button></li>
+              </form>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="../">Logout</a></li>
             </ul>
@@ -101,7 +103,7 @@
 </div>        
   </div>
 
-      <div id="friendReq" class="card card-body col-3 friend-requests collapse" style="min-height: 78vh; max-width: 300px;">
+      <div id="friendReq" class="card card-body col-3 friend-requests collapse">
         
           <h3 class="text-center">Friend Requests</h3>
           <div>
@@ -175,10 +177,12 @@
         </div>
         <div class="col-12 typing-box">
           <form action="/home/send" method="post">
-            <div class="mb-3">
-              <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
+            <div class="d-flex flex-row">
+              <div class="mb-3">
+                <textarea class="form-control" id="messageBox" name="message" rows="3"></textarea>
+              </div>
+              <div class="d-flex flex-row-reverse"><button type="submit">Send</button></div>
             </div>
-            <div class="d-flex flex-row-reverse"><button type="submit">Send</button></div>
           </form>
         </div>
         

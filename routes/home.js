@@ -14,6 +14,14 @@ const loginInfo = {
 }
 let list = [];
 let requests = [];
+const accountInfo = {
+  ID: 0,
+  Username: '',
+  FirstName: '',
+  LastName: '', 
+  Email: '',
+  Password: ''
+}
 
 
 router.use(logger);
@@ -28,7 +36,9 @@ router
     (err, result) => {
       if (err) throw err;
       const userPass = req.body.password;
+        accountInfo.Password = result[0].password;
         if (userPass === result[0].password){
+          // exports.var1 = user;
           ID = result[0].ID;
             login(res);
           } else {
@@ -126,6 +136,26 @@ router
   })
 })
 
+router
+.route("/account")
+.post((req, res) => {
+    con.query("SELECT * FROM person WHERE ID = " + ID, 
+    (err, result) =>{
+      accountInfo.FirstName = result[0].fName;
+      accountInfo.LastName = result[0].lName;
+      accountInfo.Email = result[0].Email;
+      res.render('account', accountInfo);
+    })
+})
+
+router
+.route("/account/name")
+.post((req, res) => {
+  console.log("Firing");
+  console.log(req.body.fName);
+  res.render('account');
+})
+
 function logger(req, res, next){
     next();
 }
@@ -167,7 +197,9 @@ function login(res){
 
                     friendRequests = friendRequests;
                     loginInfo.username = user;
+                    accountInfo.Username = user;
                     loginInfo.id = ID;
+                    accountInfo.ID = ID;
                     loginInfo.friendlist = list;
                     loginInfo.requests = friendRequests;
 
@@ -194,4 +226,11 @@ function login(res){
           })
         }
 
-module.exports = router; 
+ 
+// module.exports = sendTo;
+// module.exports = ID;
+// module.exports = friendID;
+// module.exports = loginInfo;
+// module.exports = list;
+// module.exports = requests;
+module.exports = router;
