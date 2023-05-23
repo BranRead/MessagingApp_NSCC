@@ -35,6 +35,7 @@ router
   user,
     (err, result) => {
       if (err) throw err;
+      user = result[0].username;
       const userPass = req.body.password;
         accountInfo.Password = result[0].password;
         if (userPass === result[0].password){
@@ -139,21 +140,104 @@ router
 router
 .route("/account")
 .post((req, res) => {
-    con.query("SELECT * FROM person WHERE ID = " + ID, 
-    (err, result) =>{
-      accountInfo.FirstName = result[0].fName;
-      accountInfo.LastName = result[0].lName;
-      accountInfo.Email = result[0].Email;
+  con.query("SELECT * FROM person WHERE ID = " + ID, 
+  (err, result) => {
+    console.log(ID);
+    accountInfo.FirstName = result[0].fName;
+    accountInfo.LastName = result[0].lName;
+    accountInfo.Email = result[0].Email;
+    con.query("SELECT * FROM account WHERE ID = " + ID,
+    (err, result) => {
+      accountInfo.Username = result[0].username;
+      accountInfo.Password = result[0].password;
       res.render('account', accountInfo);
     })
+  })
+})
+
+router
+.route("/account/username")
+.post((req, res) => {
+  let newUsername = req.body.username;
+  if(newUsername != " "){
+    con.query("UPDATE account SET username = '" + newUsername + "' WHERE ID = " + ID,
+    (err, result) => {
+      if(err) throw err;
+      accountInfo.Username = newUsername;
+      res.render('account', accountInfo)
+    })
+  } else {
+    res.render('account', accountInfo);
+  }
 })
 
 router
 .route("/account/name")
 .post((req, res) => {
-  console.log("Firing");
-  console.log(req.body.fName);
-  res.render('account');
+  let newFName = req.body.fName;
+  let newLName = req.body.lName;
+
+  if(newFName != " " && newFName.length > 0){
+    con.query("UPDATE person SET fName = '" + newFName + "' WHERE ID = " + ID,
+    (err, result) => {
+      if(err) throw err;
+      accountInfo.FirstName = newFName;
+    })
+  }
+  
+  if(newLName != " " && newLName.length > 0){
+    con.query("UPDATE person SET lName = '" + newLName + "' WHERE ID = " + ID,
+    (err, result) => {
+      if(err) throw err;
+      accountInfo.LastName = newLName;
+      res.render('account', accountInfo)
+    })
+  } else {
+    res.render('account', accountInfo);
+  }
+})
+
+router
+.route("/account/email")
+.post((req, res) => {
+  let newEmail = req.body.email;
+  if(newEmail != " ") {
+    con.query("UPDATE person SET email = '" + newEmail + "' WHERE ID = " + ID,
+    (err, result) => {
+      if(err) throw err;
+      accountInfo.Email = newEmail;
+      res.render('account', accountInfo)
+    })
+  } else {
+    res.render('account');
+  }
+})
+
+router
+.route("/account/password")
+.post((req, res) => {
+  let oldPassword = req.body.oldPassword;
+  let newPassword = req.body.newPassword;
+  let confirmNewPassword = req.body.confirmNewPassword;
+
+  if(accountInfo.Password === oldPassword) {
+    if(newPassword === confirmNewPassword) {
+      con.query("UPDATE account SET password = '" + newPassword + "' WHERE ID = " + ID,
+    (err, result) => {
+      if(err) throw err;
+      accountInfo.Password = newPassword;
+      res.render('account', accountInfo)
+    })
+    } else {
+      console.log("Wrong new password")
+      res.render('account', accountInfo);
+    }
+  } else {
+    console.log("Wrong old password")
+    res.render('account', accountInfo);
+  }
+
+  
 })
 
 function logger(req, res, next){
