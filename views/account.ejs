@@ -32,49 +32,45 @@
       </div>
     </nav>
 
-  <div class="container">
+  <div class="container mt-5">
     <div class="row justify-content-around">
-        <div class="col-6  account-content">
+        <div class="col-6 account-content">
             
-            <div class="account-title d-flex flex-row justify-content-between">
-                <div class="text-center ms-3 flex-grow-1">
-                    <h2 class="account-username"><%= Username %></h2>
-                </div>
-                <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#username">
-                    Change Username
-                </button>
+            <div class="account-title d-flex flex-column">
+                    
+                    <h2 class="account-username align-self-center text-center"><%= Username %></h2>
+                    
+                    <button type="button" class="btn btn-primary edit-username-button align-self-center" data-bs-toggle="modal" data-bs-target="#usernameModal">
+                        Change Username
+                    </button>
             </div>
 
-            <div class="account-sub d-flex flex-row justify-content-between ms-3 me-3">
+            <div class="account-sub d-flex flex-row justify-content-between p-3">
                 <div class="text-start">
                     <p class="account-heading">Name</p>
                     <h4><%= FirstName + " " + LastName %></h4>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#name">
+                <button type="button" class="btn btn-primary edit-button align-self-center" data-bs-toggle="modal" data-bs-target="#nameModal">
                     Change Name
                 </button>
             </div>
 
             <div class="line"></div>
 
-            <div class="account-sub d-flex flex-row justify-content-between ms-3 me-3">
+            <div class="account-sub d-flex flex-row justify-content-between p-3">
                 <div class="text-start">
                     <p class="account-heading">Email</p>
                     <h4><%= Email%></h4>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#email">
+                <button type="button" class="btn btn-primary edit-button align-self-center" data-bs-toggle="modal" data-bs-target="#emailModal">
                     Change Email
                 </button>
             </div>
 
             <div class="line"></div>
 
-            <div class="account-sub d-flex flex-row justify-content-between ms-3 me-3">
-                <div class="text-start">
-                    <p class="account-heading">Password</p>
-                    <h4><%= Password %></h4>
-                </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#password">
+            <div class="account-sub d-flex flex-row  justify-content-center p-3">
+                <button type="button" class="btn btn-primary edit-password-button align-self-center" data-bs-toggle="modal" data-bs-target="#passwordModal">
                     Change Password
                 </button>
             </div>
@@ -85,18 +81,18 @@
 
     <!-- Modals -->
     <!-- Username Modal -->
-<div class="modal fade" id="username" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bg-dark" id="usernameModal" tabindex="-1" aria-labelledby="Change Username" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="usernameModalTitle">Change Username</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="/home/account/name" method="post">
+        <form action="/home/account/username" method="post">
             <div class="modal-body">
-                <input type="text" id="fName" class="form-control entry"
-                placeholder="Type first name here" name="fName" required>
-                <label for="fName">First Name</label>
+                <input type="text" id="username" class="form-control entry"
+                placeholder="Type New Username Here" name="username" required>
+                <label for="username">New Username</label>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -108,18 +104,23 @@
   </div>
 
   <!-- Name Modal -->
-<div class="modal fade" id="name" tabindex="-1" aria-labelledby="Change Name" aria-hidden="true">
+<div class="modal fade bg-dark" id="nameModal" tabindex="-1" aria-labelledby="Change Name" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Change Name</h1>
+          <h1 class="modal-title fs-5" id="nameModalTitle">Change First/Last Name</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form action="/home/account/name" method="post">
             <div class="modal-body">
                 <input type="text" id="fName" class="form-control entry"
                 placeholder="Type first name here" name="fName" required>
-                <label for="fName">First Name</label>
+                <label for="fName">New First Name</label>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="lName" class="form-control entry"
+                placeholder="Type last name here" name="lName" required>
+                <label for="lName">New Last Name</label>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -131,18 +132,18 @@
   </div>
 
     <!-- Email Modal -->
-<div class="modal fade" id="email" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bg-dark" id="emailModal" tabindex="-1" aria-labelledby="Change Email" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="emailModalTitle">Change Email</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="/home/account/name" method="post">
+        <form action="/home/account/email" method="post">
             <div class="modal-body">
-                <input type="text" id="fName" class="form-control entry"
-                placeholder="Type first name here" name="fName" required>
-                <label for="fName">First Name</label>
+                <input type="text" id="email" class="form-control entry"
+                placeholder="Type New Email here" name="fName" required>
+                <label for="email">New Email</label>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -154,18 +155,28 @@
   </div>
 
   <!-- Password Modal -->
-<div class="modal fade" id="password" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bg-dark" id="passwordModal" tabindex="-1" aria-labelledby="Change Password" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="passwordModalTitle">Change Password</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="/home/account/name" method="post">
+        <form action="/home/account/password" method="post">
             <div class="modal-body">
-                <input type="text" id="fName" class="form-control entry"
-                placeholder="Type first name here" name="fName" required>
-                <label for="fName">First Name</label>
+                <input type="text" id="oldPassword" class="form-control entry"
+                placeholder="Type Old Password Here" name="oldPassword" required>
+                <label for="oldPassword">Confirm Old Password</label>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="newPassword" class="form-control entry"
+                placeholder="Type New Password Here" name="newPassword" required>
+                <label for="newPassword">New Password</label>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="confirmNewPassword" class="form-control entry"
+                placeholder="Type New Password to Confirm" name="confirmNewPassword" required>
+                <label for="confirmNewPassword">Confirm New Password</label>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

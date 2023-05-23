@@ -15,7 +15,7 @@ body {
 .account-title {
     background-color: rgba(0, 168, 232, 1);
     width: 100%;
-    height: 7vh;
+    height: 10vh;
     border-bottom: 5px solid #020300;
 }
 
@@ -31,12 +31,28 @@ body {
     padding: 0;
 }
 
+.account-sub {
+    background-color: #C1BDB3;
+    color: #020300;
+}
+
 .account-username {
     width: 100%;
 }
 
 .account-heading {
     margin-bottom: 0;
+}
+
+.edit-button, .edit-psswrd-button, .edit-username-button {
+    max-width: 5vw;
+    max-height: 6vh;
+    font-size: 14px !important;
+    padding: auto;
+}
+
+.edit-psswrd-button, .edit-username-button {
+    max-width: fit-content;
 }
 
 
