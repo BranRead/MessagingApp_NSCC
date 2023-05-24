@@ -54,13 +54,24 @@
                 <% if(friendlist.length > 0){
                   friendlist.forEach(function(friend){
                       %>
-                      <form action="/home/messages" method="post">
-                        <button class="friend d-flex flex-row justify-content-between align-items-center" type="submit" name="userF" value="<%= friend.username %>">
+                      
+                        <div class="friend d-flex flex-row justify-content-between align-items-center" value="<%= friend.FriUsername %>">
                           <div class="profilepic overflow-hidden"><img src="" alt=""></div>
-                          <p><%= friend.username %></p>
-                          <span class="badge bg-primary rounded-pill">5</span>
-                        </button>
-                      </form>
+                          <p><%= friend.FriUsername %></p>
+                          
+                          <form action="/home/messages" method="post">
+                            <button type="submit" name="userF" value="<%= friend.FriUsername %>">
+                              Message
+                            </button>
+                          </form>
+
+                          <form action="/home/delete" method="post">
+                            <button type="submit" name="FriID" value="<%= friend.ReqID %>">
+                              Delete
+                            </button>
+                          </form>
+                        </div>
+                      
                       <%
                   })
                 } else {

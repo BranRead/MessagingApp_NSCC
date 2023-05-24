@@ -49,6 +49,12 @@ router
   })
 })
 
+router
+.route("/return")
+.post((req, res) => {
+  login(res);
+})
+
 router.
 route("/messages")
 // Gets messages
@@ -81,8 +87,17 @@ route("/messages")
   })
 })
 
-router.
-route("/search")
+router.route("/delete").post((req, res) => {
+  console.log("Working")
+  con.query("DELETE FROM friends WHERE FriReqID = " + req.body.FriID,
+  (err, result) => {
+    if (err) throw err;
+    login(res);
+  })
+})
+
+router
+.route("/search")
 .post((req, res) => {
   const added = req.body.username;
   console.log(1 + added + 1);
@@ -246,34 +261,58 @@ function logger(req, res, next){
 
 
 function login(res){
-  con.query("SELECT SentToID, SentFromID FROM friends where ? = SentToID AND Verified = 1 OR ? = SentFromID AND Verified = 1 ;",
-              [ID, ID], (err, result) => {
+  con.query("SELECT FriReqID, SentToID, SentFromID FROM friends where ? = SentToID AND Verified = 1 OR ? = SentFromID AND Verified = 1 ;",
+              [ID, ID], (err, friend) => {
                 if (err) throw err;
-                if (result.length > 0) {
-                  let query = "SELECT A.ID, A.username, P.fName, P.lName FROM account AS A INNER JOIN person AS P ON A.ID = P.ID WHERE ";
-                  let flag = false;
-                  result.forEach((value) => {
-                    if(value.SentToID != ID){
-                      if(!flag){
-                        query += "A.ID = " + value.SentToID;
-                        flag = true;
-                      } else {
-                        query += " OR A.ID = " + value.SentToID;
-                      }
+                list = [];
+                if (friend.length > 0) {
+                  friend.forEach((person) => {
+                    let FriendID = 0;
+                    if(person.SentToID != ID) {
+                      FriendID = person.SentToID
                     } else {
-
-                      if(!flag){
-                        query += "A.ID = " + value.SentFromID;
-                        flag = true;
-                      } else {
-                        query += " OR A.ID = " + value.SentFromID;
-                      }
+                      FriendID = person.SentFromID
                     }
+                    list.push({
+                      ReqID: person.FriReqID,
+                      FriID: FriendID,
+                      FriUsername: ''
+
+                    })
                   })
+                  let query = "SELECT username FROM account WHERE ID = " +
+                   list[0].FriID;
+
+                   for(let i=1; i < list.length; i++){
+                    query += " OR ID = " + list[i].FriID
+                   }
+                  
+                  // friend.forEach((value) => {
+                  //   if(value.SentToID != ID){
+                  //     if(!flag){
+                  //       query += "A.ID = " + value.SentToID;
+                  //       flag = true;
+                  //     } else {
+                  //       query += " OR A.ID = " + value.SentToID;
+                  //     }
+                  //   } else {
+
+                  //     if(!flag){
+                  //       query += "A.ID = " + value.SentFromID;
+                  //       flag = true;
+                  //     } else {
+                  //       query += " OR A.ID = " + value.SentFromID;
+                  //     }
+                  //   }
+                  // })
                 
                 con.query(query, (err, result) => {
                   if (err) throw err;
-                  list = result;
+                  // list = result;
+                  for(let i = 0; i < result.length; i++){
+                    
+                    list[i].FriUsername = result[i].username
+                  }
 
                   con.query("SELECT F.FriReqID, A.username FROM friends as F INNER JOIN account as A ON F.SentFromID=A.ID WHERE F.SentToID=" + ID + " AND F.Verified = 0",
                   (err, friendRequests) => {
@@ -311,10 +350,5 @@ function login(res){
         }
 
  
-// module.exports = sendTo;
-// module.exports = ID;
-// module.exports = friendID;
-// module.exports = loginInfo;
-// module.exports = list;
-// module.exports = requests;
+
 module.exports = router;
