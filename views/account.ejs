@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/styles.css">
-    <title>As the Crow Flies</title>
+    <title>Carrier Pigeon</title>
 </head>
 <body>
 
@@ -14,20 +14,24 @@
       <div class="container">
           <a class="navbar-brand col-3" href="#">
             <img src="/images/crowb.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-            <h3 class="d-inline-block">As the Crow Flies</h3>
+            <h3 class="d-inline-block heading">Carrier Pigeon</h3>
           </a>
           <h3 class="text-center col-3 username-title"></h3>
           <div class="col-3">
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="normal-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Menu
               </button>
-              <ul class="dropdown-menu dropdown-menu-dark">
+              <ul class="dropdown-menu">
                 <form action="/home/return" method="post">
-                    <li><button class="dropdown-item" type="submit">Home</button></li>
+                    <li><button class="dropdown-item" type="submit"><div class="d-flex flex-row justify-content-between align-items-center"><img class="icon" src="/images/home.png" alt=""><p id="home">Home</p></div></button></li>
                   </form>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="../">Logout</a></li>
+                <form action="/home/logout" method="post">
+                    
+                        <li><button class="dropdown-item" type="submit"><div class="d-flex flex-row justify-content-between align-items-center"><img class="icon" src="/images/exit.png" alt=""><p id="logout">Logout</p></div></button></li>
+                    
+                </form>
               </ul>
             </div>
           </div>
@@ -42,7 +46,7 @@
                     
                     <h2 class="account-username align-self-center text-center"><%= Username %></h2>
                     
-                    <button type="button" class="btn btn-primary edit-username-button align-self-center" data-bs-toggle="modal" data-bs-target="#usernameModal">
+                    <button type="button" class="normal-button align-self-center mb-2" data-bs-toggle="modal" data-bs-target="#usernameModal">
                         Change Username
                     </button>
             </div>
@@ -52,7 +56,7 @@
                     <p class="account-heading">Name</p>
                     <h4><%= FirstName + " " + LastName %></h4>
                 </div>
-                <button type="button" class="btn btn-primary edit-button align-self-center" data-bs-toggle="modal" data-bs-target="#nameModal">
+                <button type="button" class="normal-button align-self-center" data-bs-toggle="modal" data-bs-target="#nameModal">
                     Change Name
                 </button>
             </div>
@@ -64,7 +68,7 @@
                     <p class="account-heading">Email</p>
                     <h4><%= Email%></h4>
                 </div>
-                <button type="button" class="btn btn-primary edit-button align-self-center" data-bs-toggle="modal" data-bs-target="#emailModal">
+                <button type="button" class="normal-button align-self-center" data-bs-toggle="modal" data-bs-target="#emailModal">
                     Change Email
                 </button>
             </div>
@@ -72,7 +76,7 @@
             <div class="line"></div>
 
             <div class="account-sub d-flex flex-row  justify-content-center p-3">
-                <button type="button" class="btn btn-primary edit-password-button align-self-center" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                <button type="button" class="normal-button align-self-center" data-bs-toggle="modal" data-bs-target="#passwordModal">
                     Change Password
                 </button>
             </div>
@@ -189,17 +193,14 @@
     </div>
   </div>
 
-  <footer class="navbar bg-body-tertiary footer-messaging d-flex flex-column-reverse">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="/images/crowb.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-        As the Crow Flies
-      </a>
+  <<footer class="navbar bg-body-tertiary footer-account">
+    <div class="container-fluid heading justify-content-around">
+        <h4>Filler text</h4>
     </div>
-  </footer>
+</footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-  
+  <script src="/scripts/script.js"></script>
 </body>
 </html>

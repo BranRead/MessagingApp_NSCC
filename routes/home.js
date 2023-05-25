@@ -70,17 +70,22 @@ route("/messages")
         if(err){
           throw err;
         } else {
-          res.render('home', 
-            {
-              action: 'receive',
-              username: user,
-              userFriend: userFriend,
-              id: ID,
-              friendID: friendID,
-              messages: messages,
-              friendlist: list
-            });
-            
+          con.query("SELECT F.FriReqID, A.username FROM friends as F INNER JOIN account as A ON F.SentFromID=A.ID WHERE F.SentToID=" + ID + " AND F.Verified = 0",
+            (err, friendRequests) => {
+            if(err) throw err;
+            let requests = friendRequests  
+            res.render('home', 
+              {
+                action: 'receive',
+                username: user,
+                userFriend: userFriend,
+                id: ID,
+                friendID: friendID,
+                messages: messages,
+                friendlist: list,
+                requests: requests
+              });
+          })
         }
       }
   )}
@@ -251,8 +256,27 @@ router
     console.log("Wrong old password")
     res.render('account', accountInfo);
   }
+})
 
-  
+router.route("/logout").post((req, res) => {
+  user = '';
+  sendTo = '';
+  ID = 0; 
+  friendID = 0;
+  loginInfo.action = 'login';
+  loginInfo.username = '';
+  loginInfo.id = 0;
+  loginInfo.friendlist = [];
+  loginInfo.requests = [];
+  list = [];
+  requests = [];
+  accountInfo.ID = 0;
+  accountInfo.Username = '';
+  accountInfo.FirstName = '';
+  accountInfo.LastName = ''; 
+  accountInfo.Email = '';
+  accountInfo.Password = '';
+  res.render('logout')
 })
 
 function logger(req, res, next){

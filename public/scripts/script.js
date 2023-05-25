@@ -18,6 +18,8 @@ const friendReqScreen = document.getElementById(".friend-requests");
 // }
 
 
+
+
 function getDetails(connection){
 
     if (ID !== connection.PersonA_ID){

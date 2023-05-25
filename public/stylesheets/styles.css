@@ -3,24 +3,61 @@
     border-bottom: 5px solid #020300;
 }
 
+.heading {
+    color: white;
+}
+
+.icon {
+    max-width: 20px;
+    max-height: 20px !important;
+}
+
 body {
     background-color: #020300;
     background-image: url("../images/background.jpg");
+}
+
+#home, #account, #logout {
+    margin: 0;
 }
 
 .content {
     margin-top: 22vh;
 }
 
-#username, #password {
+#username, #password, #fName, #lName, #email, #passwordConfirm {
     border: 2px solid #020300;
 }
 
 .account-title {
     background-color: rgba(0, 168, 232, 1);
     width: 100%;
-    height: 10vh;
     border-bottom: 5px solid #020300;
+    color: black;
+}
+
+.contact-options {
+    background-color: rgba(0, 168, 232, 1);
+    width: 100%;
+    border: 5px solid #020300;
+}
+
+.login-text {
+    width: 70%;
+}
+
+.normal-button {
+    background-color: #33b9ed;
+    border: 2px solid #020300;
+    border-radius: 10px;
+    padding: .4vw;
+    padding-left: .7vw;
+    padding-right: .7vw;
+}
+
+.normal-button > span {
+    display: inline-block;
+    width: 65px !important;
 }
 
 .line {
@@ -28,7 +65,6 @@ body {
     height: 2px;
     background-color: #020300;
 }
-
 
 .account-content {
     height: 100%;
@@ -59,8 +95,6 @@ body {
     max-width: fit-content;
 }
 
-
-
 .login, .account-content {
     color: white;
     background-color: rgba(97, 102, 130, .8);
@@ -86,28 +120,40 @@ a.forgotPass:hover, a.forgotPass:active {
     color: #353533;
 }
 
-
 .messaging-content {
     margin-top: 4vh;
 }
 
-.footer-home {
-    margin-top: 41.7vh;
+.footer-login, .footer-signup, .footer-home, .footer-messaging, .footer-account, .footer-logout {
     background-color: #616682 !important;
     border-top: 5px solid #020300;
 }
 
-.footer-messaging {
-    margin-top: 3.75vh;
-    border-top: 5px solid #020300;
-    background-color: #616682 !important;
+.footer-login {
+    margin-top: 39vh;
+}
+
+.footer-signup {
+    margin-top: 31.1vh;
+}
+
+.footer-home {
+    margin-top: 4.1vh;
+}
+
+.footer-account {
+    margin-top: 38.1vh;
+}
+
+.footer-logout {
+    margin-top: 55vh;
 }
 
 .friendui, .friend-requests, .messaging {
-    background-color: #616682;
+    background-color: rgba(97, 102, 130, .8);
     height: 78vh;
     border: 5px solid #020300;
-    opacity: 80%;
+    padding: 0;
 }
 
 .friendui {
@@ -126,6 +172,10 @@ a.forgotPass:hover, a.forgotPass:active {
     background-color: #C1BDB3;
 }
 
+.popup-add > h6 {
+    color: black;
+}
+
 .labelSearch {
     margin-left: 2vw;
 }
@@ -133,14 +183,33 @@ a.forgotPass:hover, a.forgotPass:active {
 #messaginglist {
     padding-left: 0px;
     margin-right: 0.5vw;
+    max-height: 47vh;
 }
 
-.friend, .requests {
-    border: 1px solid #020300;
-    width: 15vw;
+#friendSearch {
+    border: 2px solid #020300;
+    border-radius: 10px;
+}
+
+.friend, .requests, .friendmessaging {
+    border: 2px solid #020300;
+    width: 14vw;
     height: 60px;
     background-color: #C1BDB3;
     border-radius: 5px;
+    margin-bottom: 2vh;
+    padding-top: .5vw;
+    padding-bottom: .5vw;
+}
+
+.contact-button {
+    padding: 0;
+    margin-right: .5vw;
+}
+
+.dropdown-menu {
+    background-color: #616682;
+    border: 2px solid #020300;
 }
 
 .requests {
@@ -151,21 +220,21 @@ a.forgotPass:hover, a.forgotPass:active {
     width: 70px;
 }
 
-.friend > p {
+.friend > p, .friendmessaging > span {
     margin: 0;
     width: fit-content;
 }
 
-.profilepic {
+.profilepic, .messager-profilepic {
     width: 50px;
     height: 50px;
     background-color: #00A8E8;
     border: 1px solid #020300;
     border-radius: 30px;
-    margin-top: .5vh;
+    margin-left: 0.5vw;
 }
 
-.profilepic > img {
+.profilepic > img, .messager-profilepic > img {
     max-height: 50px;
     max-width: 50px;
 }
@@ -174,16 +243,12 @@ a.forgotPass:hover, a.forgotPass:active {
     margin-right: 1vw;
 }
 
-.messaging {
-    border-radius: 0px 10px 10px 0px;
+.friendmessaging > span {
+    width: 95%;
 }
 
-.messager {
-    width: 50px;
-    height: 50px;
-    background-color: #00A8E8;
-    border: 1px solid #020300;
-    border-radius: 30px;
+.messaging {
+    border-radius: 0px 10px 10px 0px;
 }
 
 .messages {
@@ -215,4 +280,17 @@ a.forgotPass:hover, a.forgotPass:active {
     padding: 5px;
     margin-left: 20px;
     background-color: #FF6700;
+}
+
+.send-button {
+    background-color: #C1BDB3;
+    border: 2px solid #020300;
+    border-radius: 10px;
+}
+
+.logoutWindow {
+    border: 2px solid #020300;
+    background-color: #00A8E8;
+    border-radius: 10px;
+    color: black;
 }

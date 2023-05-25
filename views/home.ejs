@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/styles.css">
-    <title>As the Crow Flies</title>
+    <title>Carrier Pigeon</title>
 </head>
 <body>
 
@@ -15,20 +15,36 @@
       
         <a class="navbar-brand col-3" href="#">
           <img src="/images/crowb.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-          <h3 class="d-inline-block">As the Crow Flies</h3>
+          <h3 class="d-inline-block heading">Carrier Pigeon</h3>
         </a>
-        <h3 class="text-center col-3 username-title"><%= username %></h3>
+        <h3 class="heading text-center col-3 username-title"><%= username %></h3>
         <div class="col-3">
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="normal-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Menu
             </button>
             <ul class="dropdown-menu dropdown-menu-dark">
               <form action="/home/account" method="post">
-                <li><button class="dropdown-item" type="submit">Account</button></li>
+                <li>
+                  <button class="dropdown-item" type="submit">
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                      <img class="icon" src="/images/settings.png" alt="">
+                      <p id="account">Account</p>
+                    </div>
+                  </button>
+              </li>
               </form>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="../">Logout</a></li>
+              <div class="line"></div>
+              <form action="/home/logout" method="post">
+                <li>
+                  <button class="dropdown-item" type="submit">
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                      <img class="icon" src="/images/exit.png" alt="">
+                      <p id="logout">Logout</p>
+                    </div>
+                  </button>
+                </li>
+              </form>
             </ul>
           </div>
         </div>
@@ -44,8 +60,10 @@
         <% } else { %>
           <div class="col-3 friendui">
           <% } %>
-        <h3 class="text-center">Contacts</h3>
-        <div class="overflow-auto friendlist">
+        <div class="account-title">
+          <h3 class="text-center">Contacts</h3>
+        </div>
+        <div class="overflow-auto friendlist mt-2">
         
         <div id="messaginglist" class="d-flex flex-column justify-content-between align-items-center mb-2">
           <div>
@@ -60,17 +78,18 @@
                           <div class="profilepic overflow-hidden"><img src="" alt=""></div>
                           <p><%= friend.FriUsername %></p>
                           
-                          <form action="/home/messages" method="post">
-                            <button type="submit" name="userF" value="<%= friend.FriUsername %>">
-                              Message
-                            </button>
-                          </form>
-
-                          <form action="/home/delete" method="post">
-                            <button type="submit" onclick="return confirm('Are you sure?')" name="ReqID" value="<%= friend.ReqID %>">
-                              Delete
-                            </button>
-                          </form>
+                          <div class="d-flex flex-row">
+                            <form action="/home/messages" method="post">
+                              <button class="contact-button btn btn-disabled-bg" type="submit" name="userF" value="<%= friend.FriUsername %>">
+                                <img class="icon" src="/images/envelope.png" alt="">
+                              </button>
+                            </form>
+                            <form action="/home/delete" method="post">
+                              <button class="contact-button btn btn-disabled-bg" type="submit" onclick="return confirm('Are you sure?')" name="ReqID" value="<%= friend.ReqID %>">
+                                <img class="icon" src="/images/trash.png" alt="">
+                              </button>
+                            </form>
+                          </div>
 
                         </div>                      
                       <%
@@ -78,7 +97,7 @@
                 } else {
                   %>
                   <div>
-                      <p>Add some friends!</p>
+                      <p class="heading">Add some friends!</p>
                   </div>
                   <%
                 }
@@ -91,12 +110,12 @@
 
      
       
-<div class="d-flex flex-row justify-content-center">
-  <button id="addFriend" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#friendSearch" aria-expanded="false" aria-controls="friendSearch">
-    +
+<div class="d-flex flex-row justify-content-center contact-options">
+  <button id="addFriend" class="btn btn-disabled-bg" type="button" data-bs-toggle="collapse" data-bs-target="#friendSearch" aria-expanded="false" aria-controls="friendSearch">
+    <img class="icon" src="/images/user-add.png" alt="">
   </button>
-  <button id="notif" class="ms-3 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#friendReq" aria-expanded="false" aria-controls="friendReq">
-    Bell
+  <button id="notif" class="ms-3 btn btn-disabled-bg" type="button" data-bs-toggle="collapse" data-bs-target="#friendReq" aria-expanded="false" aria-controls="friendReq">
+    <img class="icon" src="/images/bell.png" alt="">
   </button>
 </div>
 
@@ -105,11 +124,11 @@
     <div  class="popup-add d-flex flex-column justify-content-between align-items-center text-center">
         <h6>Add Friends by entering their username</h6>
         <form action="/home/search" method="post">
-          <div class="form-floating d-flex flex-column justify-content-between align-items-center">
+          <div class="form-floating d-flex flex-row justify-content-between align-items-center">
               <input type="username" id="username" class="form-control entry friend-search"
               placeholder="Type username here" name="username" required>
               <label class="labelSearch" for="username">Username</label>
-              <button class="searchUser" type="submit">Send Request</button>
+              <button class="searchUser btn btn-disabled-bg" type="submit"><img class="icon" src="/images/add.png" alt=""></button>
           </div>
         </form>
       </div>
@@ -119,10 +138,12 @@
 
       <div id="friendReq" class="card card-body col-3 friend-requests collapse">
         
-          <h3 class="text-center">Friend Requests</h3>
+          <div class="account-title">
+            <h3 class="text-center">Friend Requests</h3>
+          </div>
           <div>
             <div id="friendReqList" class="d-flex flex-column justify-content-between align-items-center">
-              <% if(action == 'login') {
+              <% if(action == 'login' || action == 'receive') {
                 if (requests.length != 0) { %>
                 <% requests.forEach((person) => { %>
                   <div class="requests d-flex flex-row justify-content-between align-items-center">
@@ -146,7 +167,7 @@
               <% })
                 } else { %>
                   <div class="d-flex flex-row justify-content-between align-items-center">
-                    <p>No Friend Requests</p>
+                    <p class="heading">No Friend Requests</p>
                   </div>
                 <% }
               } %>
@@ -157,15 +178,21 @@
 
       <% if (action == 'receive') {%> 
       <div class="col-5 messaging">
-        <h3 class="text-center">Messaging</h3>
-        
-        <div class="col-3 friendmessaging friend d-flex align-items-center justify-content-between">
-          
-              <div class="messager overflow-hidden"><img src="" alt=""></div>
-                <span>
-                <p><%= userFriend %></p>
-                </span>
-              </div>
+        <div class="account-title">
+          <h3 class="text-center">Messaging</h3>
+        </div>
+        <div class="friend d-flex flex-row justify-content-between align-items-center mt-2">
+          <div class="profilepic overflow-hidden"><img src="" alt=""></div>
+          <p><%= userFriend %></p>
+          <div class="d-flex flex-row">
+            <button class="contact-button btn btn-disabled-bg" type="button" style="visibility: hidden;">
+              <img class="icon" src="/images/envelope.png" alt="">
+            </button>
+            <button class="contact-button btn btn-disabled-bg" type="button" style="visibility: hidden;">
+              <img class="icon" src="/images/trash.png" alt="">
+            </button>
+          </div>
+        </div>
               
         <div class="col-12 messages overflow-auto">
           <ul id="messageLog">
@@ -190,14 +217,18 @@
           <% } %>
         </div>
         <div class="col-12 typing-box">
-          <form action="/home/send" method="post">
-            <div class="d-flex flex-row">
-              <div class="mb-3">
-                <textarea class="form-control" id="messageBox" name="message" rows="3"></textarea>
-              </div>
-              <div class="d-flex flex-row-reverse"><button type="submit">Send</button></div>
-            </div>
-          </form>
+          <div class="d-flex flex-row"></div>
+            <form action="/home/send" method="post">
+
+                <div class="col-12">
+                  <div class="mb-3">
+                    <textarea class="form-control" id="messageBox" name="message" rows="3"></textarea>
+                  </div>
+                  <div class="d-flex flex-row-reverse"><button class="normal-button" type="submit"><span class="me-2">Send</span><img class="icon" src="/images/paper-plane.png" alt=""></button></div>
+                </div>
+              
+            </form>
+          </div>
         </div>
         
       </div>
@@ -205,18 +236,10 @@
     </div>
   </div>
 
-
-
-
-
-
-  <footer class="navbar bg-body-tertiary footer-messaging">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="/images/crowb.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-        As the Crow Flies
-      </a>
-    </div>
+  <footer class="navbar bg-body-tertiary footer-home">
+        <div class="container-fluid heading justify-content-around">
+            <h4>Filler text</h4>
+        </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
