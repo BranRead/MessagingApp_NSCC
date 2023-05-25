@@ -89,7 +89,7 @@ route("/messages")
 
 router.route("/delete").post((req, res) => {
   console.log("Working")
-  con.query("DELETE FROM friends WHERE FriReqID = " + req.body.FriID,
+  con.query("DELETE FROM friends WHERE FriReqID = " + req.body.ReqID,
   (err, result) => {
     if (err) throw err;
     login(res);
@@ -318,6 +318,8 @@ function login(res){
                   (err, friendRequests) => {
                     if(err) throw err;
 
+                    
+
                     friendRequests = friendRequests;
                     loginInfo.username = user;
                     accountInfo.Username = user;
@@ -325,6 +327,7 @@ function login(res){
                     accountInfo.ID = ID;
                     loginInfo.friendlist = list;
                     loginInfo.requests = friendRequests;
+                    
 
                     res.render('home', loginInfo)
                   });

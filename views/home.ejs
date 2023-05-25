@@ -56,6 +56,7 @@
                       %>
                       
                         <div class="friend d-flex flex-row justify-content-between align-items-center" value="<%= friend.FriUsername %>">
+                          
                           <div class="profilepic overflow-hidden"><img src="" alt=""></div>
                           <p><%= friend.FriUsername %></p>
                           
@@ -66,12 +67,12 @@
                           </form>
 
                           <form action="/home/delete" method="post">
-                            <button type="submit" name="FriID" value="<%= friend.ReqID %>">
+                            <button type="submit" onclick="return confirm('Are you sure?')" name="ReqID" value="<%= friend.ReqID %>">
                               Delete
                             </button>
                           </form>
-                        </div>
-                      
+
+                        </div>                      
                       <%
                   })
                 } else {
@@ -87,6 +88,8 @@
           </div>
         </div>
       </div>
+
+     
       
 <div class="d-flex flex-row justify-content-center">
   <button id="addFriend" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#friendSearch" aria-expanded="false" aria-controls="friendSearch">
@@ -201,6 +204,11 @@
       <% } %> 
     </div>
   </div>
+
+
+
+
+
 
   <footer class="navbar bg-body-tertiary footer-messaging">
     <div class="container-fluid">
