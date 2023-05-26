@@ -23,30 +23,34 @@ const accountInfo = {
   Password: ''
 }
 
-
 router.use(logger);
 
 router
 .route("/")
 // Actually logs user in
 .post((req, res) => {
-  user = req.body.username;
-  con.query("SELECT * FROM account WHERE username = ?",
-  user,
-    (err, result) => {
-      if (err) throw err;
-      user = result[0].username;
-      const userPass = req.body.password;
-        accountInfo.Password = result[0].password;
-        if (userPass === result[0].password){
-          // exports.var1 = user;
-          ID = result[0].ID;
-            login(res);
-          } else {
-            console.log("Problem logging in");
-            res.redirect('index.html');
-          }
-  })
+  if(req.body.username.length > 0 && req.body.password.length > 0) {
+    user = req.body.username;
+    con.query("SELECT * FROM account WHERE username = ?",
+    user,
+      (err, result) => {
+        if (err) throw err;
+        user = result[0].username;
+        const userPass = req.body.password;
+          accountInfo.Password = result[0].password;
+          if (userPass === result[0].password){
+            // exports.var1 = user;
+            ID = result[0].ID;
+              login(res);
+            } else {
+              console.log("Problem logging in");
+              res.redirect('index.html');
+            }
+    })
+  } else {
+    console.log("Problem logging in");
+    res.redirect('index.html');
+  }
 })
 
 router
