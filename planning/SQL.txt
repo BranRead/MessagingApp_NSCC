@@ -1,6 +1,6 @@
 CREATE DATABASE messaging;
 
-CREATE TABLE Person (
+CREATE TABLE person (
 	ID int NOT NULL AUTO_INCREMENT,
     fName varchar(255),
     lName varchar(255),
@@ -20,19 +20,17 @@ CREATE TABLE messages (
     SentToID int,
     SentFromID int,
     Message varchar(255),
-    Message_Rec boolean,
-    Message_Read boolean,
     FOREIGN KEY (SentToID) REFERENCES Person(ID),
     FOREIGN KEY (SentFromID) REFERENCES Person(ID)
 ); 
 
-CREATE TABLE Friends (
+CREATE TABLE friends (
     FriReqID int AUTO_INCREMENT,
-	PersonA_ID int,
-    PersonB_ID int,
+	SentToID int,
+    SentFromID int,
     Verified bit DEFAULT 0,
     PRIMARY KEY (FriReqID),
-    FOREIGN KEY (PersonA_ID) REFERENCES Person(ID),
-    FOREIGN KEY (PersonB_ID) REFERENCES Person(ID)
+    FOREIGN KEY (SentToID) REFERENCES Person(ID),
+    FOREIGN KEY (SentFromID) REFERENCES Person(ID)
 ); 
 
